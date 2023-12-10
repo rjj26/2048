@@ -295,6 +295,53 @@ def simulate_game(policy, show_board=False, show_score=False):
 	print("YOU LOSE")
 
 
+def simulate_count_moves(policy, show_board=False, show_score=False):
+	matrix = start_game()
+	move_count = 0
+	moves = get_all_moves(matrix)
+
+	if show_score:
+		score = game_score(matrix)
+		print("SCORE: ", score)
+
+	if show_board:
+		for row in matrix:
+			print(row)
+		print(" ")
+
+	while len(moves) != 0:
+
+		action = policy(matrix, moves, move_count)
+
+		if action == "up":
+			move_up(matrix)
+		
+		if action == "down":
+			move_down(matrix)
+		
+		if action == "left":
+			move_left(matrix)
+		
+		if action == "right":
+			move_right(matrix)
+	
+		add_random_tile(matrix)
+		moves = get_all_moves(matrix)
+
+		if show_score:
+			score = game_score(matrix)
+			print("SCORE: ", score)
+		
+		if show_board:
+			for row in matrix:
+				print(row)
+			print(" ")
+
+		move_count += 1
+
+	print("YOU LOSE")
+
+
 score_lookup = {0:0, 2:0, 4:4, 
 				8:16, 16:48, 32:128, 
 				64:320, 128:768, 256:1792, 
@@ -303,7 +350,6 @@ score_lookup = {0:0, 2:0, 4:4,
 				32768:458752, 64536: 983040, 131072: 2097152}
 
 def game_score(matrix):
-	
 	score = 0
 	for i in range(4):
 		for j in range(4):

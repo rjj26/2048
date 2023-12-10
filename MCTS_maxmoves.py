@@ -3,8 +3,9 @@ import math
 import time
 import game_2048
 
-#basic iMCTS implementation, calculates value of states based on average score from branch of game tree
-#essentially a greedy agent
+#EDITED HEURISTIC: instead of optimizing for best avg score, optimize for branch with most future moves
+#later squares are worth exponentially more 
+
 # ______________________________________________________________________________
 # Monte Carlo Tree Search
 
@@ -33,7 +34,7 @@ class Node:
         self.action = None
 
 
-def monte_carlo_tree_search(root_state, cpu_time):
+def monte_carlo_tree_search(root_state, cpu_time, move_count):
     #if node doesnt have children (leaf or terminal state), return node
     #else recursively optimize by choosing best child option per node
     root_node = Node(root_state)
@@ -42,6 +43,7 @@ def monte_carlo_tree_search(root_state, cpu_time):
         node_to_expand = select(root_node)
         new_node = expand(node_to_expand)
         simulation_result = simulate(new_node.state)
+        simulation_result += move_count
         backpropagate(new_node, simulation_result)
 
     best_child = select_best_child(root_node, exploration_weight=0)
@@ -68,12 +70,14 @@ def expand(node):
 
 #exploration of child state, no idea what best option is --> record net outcome and continue
 def simulate(state):
+    move_count = 0
     while not game_2048.is_game_over(state):
         legal_moves = game_2048.get_all_moves(state)
         chosen_move = random.choice(legal_moves)
         state = game_2048.get_successor_state(state, chosen_move)
+        move_count += 1
 
-    return game_2048.game_score(state)
+    return move_count
 
 
 #backpropogation: simulate runs until it finds a terminal state. trace back up the tree, update current move sequence
@@ -109,15 +113,23 @@ def select_best_child(node, exploration_weight=1.0):
 #C * ... reprsents exploration parameter of reward for checking univisited nodes
 
 def mcts_policy(cpu_time):    
-    def fxn(pos, moves):
+    def fxn(pos, moves, move_count):
         start_time = time.time()
         
         if game_2048.is_game_over(pos):
             return None
         
-        return monte_carlo_tree_search(pos, start_time + cpu_time)
+        return monte_carlo_tree_search(pos, start_time + cpu_time, move_count)
         
     return fxn
 
-game_2048.simulate_game(mcts_policy(0.25), show_board=True, show_score=True)
+game_2048.simulate_count_moves(mcts_policy(0.25), show_board=True, show_score=True)
 
+#need to edit simulate game to keep track of how many states have been visited
+
+#BEST SCORE:
+# SCORE:  36848
+# [256, 4, 2, 4]
+# [4, 1024, 128, 512]
+# [2048, 64, 8, 4]
+# [8, 2, 32, 2]
