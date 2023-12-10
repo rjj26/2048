@@ -1,8 +1,10 @@
-#By Reese Johnson 
+##################################
+# By Reese Johnson and Vinh Tran #
+##################################
 
-# importing random package
-# for methods to generate random
-# numbers.
+# this is a standard implementation of the game 204
+# modifications: inputs are policies and the board prints every move
+
 import random
 
 # function to initialize game / grid
@@ -254,10 +256,10 @@ def simulate_game(policy, show_board=False, show_score=False):
 	matrix = start_game()
 	moves = get_all_moves(matrix)
 
-	if show_score:
-		score = game_score(matrix)
-		print("SCORE: ", score)
+	score = game_score(matrix)
 
+	if show_score:
+		print("SCORE: ", score)
 	
 	if show_board:
 		for row in matrix:
@@ -283,8 +285,9 @@ def simulate_game(policy, show_board=False, show_score=False):
 		add_random_tile(matrix)
 		moves = get_all_moves(matrix)
 
+		score = game_score(matrix)
+
 		if show_score:
-			score = game_score(matrix)
 			print("SCORE: ", score)
 		
 		if show_board:
@@ -292,7 +295,10 @@ def simulate_game(policy, show_board=False, show_score=False):
 				print(row)
 			print(" ")
 
-	print("YOU LOSE")
+	if show_board:
+		print("GAME OVER \n")
+
+	return score
 
 
 def simulate_count_moves(policy, show_board=False, show_score=False):
@@ -300,8 +306,8 @@ def simulate_count_moves(policy, show_board=False, show_score=False):
 	move_count = 0
 	moves = get_all_moves(matrix)
 
+	score = game_score(matrix)
 	if show_score:
-		score = game_score(matrix)
 		print("SCORE: ", score)
 
 	if show_board:
@@ -327,9 +333,9 @@ def simulate_count_moves(policy, show_board=False, show_score=False):
 	
 		add_random_tile(matrix)
 		moves = get_all_moves(matrix)
+		score = game_score(matrix)
 
 		if show_score:
-			score = game_score(matrix)
 			print("SCORE: ", score)
 		
 		if show_board:
@@ -339,7 +345,10 @@ def simulate_count_moves(policy, show_board=False, show_score=False):
 
 		move_count += 1
 
-	print("YOU LOSE")
+	if show_board:
+		print("GAME OVER \n")
+		
+	return score
 
 
 score_lookup = {0:0, 2:0, 4:4, 
@@ -382,9 +391,10 @@ def get_successor_state(matrix, action):
 
 	return successor
 
-
-###POLICIES
 def human_interaction_policy(matrix, moves):
+	""" takes human inputs: up, down, left, right
+		human plays the game, not the bot
+	"""
 	
 	for row in matrix:
 		print(row)
@@ -396,29 +406,5 @@ def human_interaction_policy(matrix, moves):
 		selected_action = input("Select a move: ")
 
 	return selected_action
+
 # simulate_game(human_interaction_policy, show_board=False, show_score=True)
-
-
-def random_player(matrix, moves):
-	return random.choice(moves)
-# simulate_game(random_player, show_board=True, show_score=True)
-
-
-#greedy player always picks the move that will increase his score the most at any given game state
-def greedy_player(matrix, moves):
-
-	max_score = -1
-	optimal_action = ""
-
-	for move in moves:
-		successor = get_successor_state(matrix, move)
-		score = game_score(successor)
-		
-		if score > max_score:
-			max_score = score
-			optimal_action = move
-
-	return optimal_action
-
-# simulate_game(greedy_player, show_board=True, show_score=True)
-
