@@ -250,9 +250,19 @@ def move_down(mat):
 					mat[k][j] = mat[k-1][j]
 					mat[k-1][j] = 0
 
-def simulate_game(policy):
+def simulate_game(policy, show_board=False, show_score=False):
 	matrix = start_game()
 	moves = get_all_moves(matrix)
+
+	if show_score:
+		score = game_score(matrix)
+		print("SCORE: ", score)
+
+	
+	if show_board:
+		for row in matrix:
+			print(row)
+		print(" ")
 
 	while len(moves) != 0:
 
@@ -273,8 +283,61 @@ def simulate_game(policy):
 		add_random_tile(matrix)
 		moves = get_all_moves(matrix)
 
+		if show_score:
+			score = game_score(matrix)
+			print("SCORE: ", score)
+		
+		if show_board:
+			for row in matrix:
+				print(row)
+			print(" ")
+
 	print("YOU LOSE")
 
+
+score_lookup = {0:0, 2:0, 4:4, 
+				8:16, 16:48, 32:128, 
+				64:320, 128:768, 256:1792, 
+				512:4096, 1024:9216, 2048:20480, 
+				4096:45056, 8192:98304, 16384:212992, 
+				32768:458752, 64536: 983040, 131072: 2097152}
+
+def game_score(matrix):
+	
+	score = 0
+	for i in range(4):
+		for j in range(4):
+			score += score_lookup[matrix[i][j]]
+	
+	return score
+	
+def get_successor_state(matrix, action):
+	successor = []
+
+	#difficult because of non deterministic successor states, go with random
+	for i in range(4):
+		successor.append([0,0,0,0])
+		for j in range(4):
+			successor[i][j] = matrix[i][j]
+	
+	if action == "up":
+		move_up(successor)
+	
+	if action == "down":
+		move_down(successor)
+	
+	if action == "left":
+		move_left(successor)
+	
+	if action == "right":
+		move_right(successor)
+
+	add_random_tile(successor)
+
+	return successor
+
+
+###POLICIES
 def human_interaction_policy(matrix, moves):
 	
 	for row in matrix:
@@ -286,19 +349,30 @@ def human_interaction_policy(matrix, moves):
 	while selected_action not in moves:
 		selected_action = input("Select a move: ")
 
-
 	return selected_action
-
-# simulate_game(human_interaction_policy)
+# simulate_game(human_interaction_policy, show_board=False, show_score=True)
 
 
 def random_player(matrix, moves):
-
-	for row in matrix:
-		print(row)
-	print(" ")
-
 	return random.choice(moves)
+# simulate_game(random_player, show_board=True, show_score=True)
 
-simulate_game(random_player)
+
+#greedy player always picks the move that will increase his score the most at any given game state
+def greedy_player(matrix, moves):
+
+	max_score = -1
+	optimal_action = ""
+
+	for move in moves:
+		successor = get_successor_state(matrix, move)
+		score = game_score(successor)
+		
+		if score > max_score:
+			max_score = score
+			optimal_action = move
+
+	return optimal_action
+
+simulate_game(greedy_player, show_board=True, show_score=True)
 
