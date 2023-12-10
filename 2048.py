@@ -289,6 +289,16 @@ def human_interaction_policy(matrix, moves):
 
 	return selected_action
 
-simulate_game(human_interaction_policy)
+# simulate_game(human_interaction_policy)
 
+
+def random_player(matrix, moves):
+
+	for row in matrix:
+		print(row)
+	print(" ")
+
+	return random.choice(moves)
+
+simulate_game(random_player)
 
