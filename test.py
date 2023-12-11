@@ -12,7 +12,7 @@ def calc_score(scores):
     return score
 
 def calc_tile(tiles):
-    benchmark = [512, 1024, 2048, 4096]
+    benchmark = [256, 512, 1024, 2048, 4096]
     res = {}
     length = len(tiles)
 
@@ -46,7 +46,7 @@ def display_policy(policy, name, iterations, count=False):
     print(f"Tile Percentage: {res_tile}\n")
 
 if __name__ == "__main__":
-    iterations = 10
+    iterations = 100
     baseline1 = random_policy()
     baseline2 = greedy_policy(game)
     policy1 = mcts_avg_policy(0.05)
@@ -54,5 +54,15 @@ if __name__ == "__main__":
 
     display_policy(baseline1, "random", iterations)
     display_policy(baseline2, "greedy", iterations)
-    display_policy(policy1, "mcts average", iterations)
+    # display_policy(policy1, "mcts average", iterations)
     display_policy(policy2, "mcts max depth", iterations, count=True)
+
+
+"""
+SCORING: 100 iterations
+-----------------------
+
+mcts on max depth: ~1hr
+-> Average Score: 12354.56
+-> Tile Percentage: {512: 35.0, 1024: 46.0, 2048: 12.0, 4096: 0.0}
+"""
