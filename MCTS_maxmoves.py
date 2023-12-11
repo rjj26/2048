@@ -2,6 +2,7 @@ import random
 import math
 import time
 import game_2048
+import pickle
 
 # ______________________________________________________________________________
 # Monte Carlo Tree Search
@@ -21,6 +22,9 @@ import game_2048
 # Each node must contain two important pieces of information: an estimated value based on simulation results and the number of times it has been visited.
 # In its simplest and most memory efficient implementation, MCTS will add one child node per iteration. Note, however, that it may be beneficial to add more than one child node per iteration depending on the application.
 # ______________________________________________________________________________
+
+training_data = []
+#[(game state, move_made)]
 
 class Node:
     def __init__(self, state, parent=None):
@@ -53,6 +57,7 @@ class MCTS_MAX_MOVES:
             self.backpropagate(new_node, simulation_result)
 
         best_child = self.select_best_child(self.root_node, exploration_weight=0)
+        training_data.append((root_state, best_child.action))
         return best_child.action
 
 
@@ -132,11 +137,16 @@ def mcts_max_policy(cpu_time):
     return fxn
 
 if __name__ == "__main__":
-    game_2048.simulate_count_moves(mcts_max_policy(0.05), show_board=True, show_score=True)
+    start_time = time.time()
 
-# need to edit simulate game to keep track of how many states have been visited
+    #30 mins = 1800
+    while time.time() < start_time + 25000:
+        game_2048.simulate_count_moves(mcts_policy(0.5), show_board=False, show_score=True)
 
-# BEST SCORE:
+    with open("training_data.pkl", "wb") as f:
+        pickle.dump(training_data, f)
+
+# BEST SCORE: (0.25 seconds per move)
 # SCORE:  36848
 # [256, 4, 2, 4]
 # [4, 1024, 128, 512]
