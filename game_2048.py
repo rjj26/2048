@@ -298,7 +298,8 @@ def simulate_game(policy, show_board=False, show_score=False):
 	if show_board:
 		print("GAME OVER \n")
 
-	return score
+	flattened_matrix = [element for row in matrix for element in row]
+	return score, max(flattened_matrix)
 
 
 def simulate_count_moves(policy, show_board=False, show_score=False):
@@ -348,7 +349,8 @@ def simulate_count_moves(policy, show_board=False, show_score=False):
 	if show_board:
 		print("GAME OVER \n")
 		
-	return score
+	flattened_matrix = [element for row in matrix for element in row]
+	return score, max(flattened_matrix)
 
 
 score_lookup = {0:0, 2:0, 4:4, 
