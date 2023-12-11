@@ -1,12 +1,20 @@
-#By Reese Johnson 
+##################################
+# By Reese Johnson and Vinh Tran #
+##################################
 
-# importing random package
-# for methods to generate random
-# numbers.
+# this is a standard implementation of the game 204
+# modifications: inputs are policies and the board prints every move
+
 import random
 
-# function to initialize game / grid
-# at the start
+score_lookup = {0:0, 2:0, 4:4, 
+				8:16, 16:48, 32:128, 
+				64:320, 128:768, 256:1792, 
+				512:4096, 1024:9216, 2048:20480, 
+				4096:45056, 8192:98304, 16384:212992, 
+				32768:458752, 64536: 983040, 131072: 2097152}
+
+# function to initialize game / grid at the start
 def start_game():
 
 	# declaring an empty list then
@@ -29,9 +37,8 @@ def start_game():
 	add_random_tile(mat)
 	return mat
 
-# function to add a new 2 in
-# grid at any random empty cell
-#old: def add_new_2(mat):
+# function to add a new 2 in grid at any random empty cell
+# old: def add_new_2(mat):
 def add_random_tile(mat):
 
 	# choosing a random index for
@@ -55,9 +62,7 @@ def add_random_tile(mat):
 	else:
 		mat[r][c] = 4
 
-# function to get the current
-# state of game
-
+# function to get the current state of game
 def is_game_over(mat):
 
 	moves = get_all_moves(mat)
@@ -133,7 +138,6 @@ def get_all_moves(mat):
 
 	return moves
 
-
 def move_left(mat):
 	#first condense spaces
 	for i in range(4):
@@ -161,7 +165,6 @@ def move_left(mat):
 				for k in range(j,3):
 					mat[i][k] = mat[i][k+1]
 					mat[i][k+1] = 0
-
 	
 def move_right(mat):
 	#first condense spaces
@@ -192,7 +195,6 @@ def move_right(mat):
 					mat[i][k-1] = 0
 
 #up is going to be like left
-
 def move_up(mat):
 	#first condense spaces
 	for j in range(4):
@@ -220,7 +222,6 @@ def move_up(mat):
 				for k in range(i,3):
 					mat[k][j] = mat[k+1][j]
 					mat[k+1][j] = 0
-
 
 def move_down(mat):
 	#first condense spaces
@@ -254,10 +255,10 @@ def simulate_game(policy, show_board=False, show_score=False):
 	matrix = start_game()
 	moves = get_all_moves(matrix)
 
-	if show_score:
-		score = game_score(matrix)
-		print("SCORE: ", score)
+	score = game_score(matrix)
 
+	if show_score:
+		print("SCORE: ", score)
 	
 	if show_board:
 		for row in matrix:
@@ -271,20 +272,21 @@ def simulate_game(policy, show_board=False, show_score=False):
 		if action == "up":
 			move_up(matrix)
 		
-		if action == "down":
+		elif action == "down":
 			move_down(matrix)
 		
-		if action == "left":
+		elif action == "left":
 			move_left(matrix)
 		
-		if action == "right":
+		elif action == "right":
 			move_right(matrix)
 	
 		add_random_tile(matrix)
 		moves = get_all_moves(matrix)
 
+		score = game_score(matrix)
+
 		if show_score:
-			score = game_score(matrix)
 			print("SCORE: ", score)
 		
 		if show_board:
@@ -292,16 +294,19 @@ def simulate_game(policy, show_board=False, show_score=False):
 				print(row)
 			print(" ")
 
-	print("YOU LOSE")
+	if show_board:
+		print("GAME OVER \n")
 
+	flattened_matrix = [element for row in matrix for element in row]
+	return score, max(flattened_matrix)
 
 def simulate_count_moves(policy, show_board=False, show_score=False):
 	matrix = start_game()
 	move_count = 0
 	moves = get_all_moves(matrix)
 
+	score = game_score(matrix)
 	if show_score:
-		score = game_score(matrix)
 		print("SCORE: ", score)
 
 	if show_board:
@@ -327,9 +332,9 @@ def simulate_count_moves(policy, show_board=False, show_score=False):
 	
 		add_random_tile(matrix)
 		moves = get_all_moves(matrix)
+		score = game_score(matrix)
 
 		if show_score:
-			score = game_score(matrix)
 			print("SCORE: ", score)
 		
 		if show_board:
@@ -339,15 +344,11 @@ def simulate_count_moves(policy, show_board=False, show_score=False):
 
 		move_count += 1
 
-	print("YOU LOSE")
-
-
-score_lookup = {0:0, 2:0, 4:4, 
-				8:16, 16:48, 32:128, 
-				64:320, 128:768, 256:1792, 
-				512:4096, 1024:9216, 2048:20480, 
-				4096:45056, 8192:98304, 16384:212992, 
-				32768:458752, 64536: 983040, 131072: 2097152}
+	if show_board:
+		print("GAME OVER \n")
+		
+	flattened_matrix = [element for row in matrix for element in row]
+	return score, max(flattened_matrix)
 
 def game_score(matrix):
 	score = 0
@@ -382,9 +383,10 @@ def get_successor_state(matrix, action):
 
 	return successor
 
-
-###POLICIES
 def human_interaction_policy(matrix, moves):
+	""" takes human inputs: up, down, left, right
+		human plays the game, not the bot
+	"""
 	
 	for row in matrix:
 		print(row)
@@ -396,29 +398,5 @@ def human_interaction_policy(matrix, moves):
 		selected_action = input("Select a move: ")
 
 	return selected_action
+
 # simulate_game(human_interaction_policy, show_board=False, show_score=True)
-
-
-def random_player(matrix, moves):
-	return random.choice(moves)
-# simulate_game(random_player, show_board=True, show_score=True)
-
-
-#greedy player always picks the move that will increase his score the most at any given game state
-def greedy_player(matrix, moves):
-
-	max_score = -1
-	optimal_action = ""
-
-	for move in moves:
-		successor = get_successor_state(matrix, move)
-		score = game_score(successor)
-		
-		if score > max_score:
-			max_score = score
-			optimal_action = move
-
-	return optimal_action
-
-# simulate_game(greedy_player, show_board=True, show_score=True)
-
