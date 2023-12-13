@@ -137,14 +137,14 @@ def mcts_max_policy(cpu_time):
     return fxn
 
 if __name__ == "__main__":
-    start_time = time.time()
+    # start_time = time.time()
 
     #30 mins = 1800
-    while time.time() < start_time + 25000:
-        game_2048.simulate_count_moves(mcts_policy(0.5), show_board=False, show_score=True)
+    # while time.time() < start_time + 25000:
+    game_2048.simulate_count_moves(mcts_max_policy(0.5), show_board=True, show_score=True)
 
-    with open("training_data.pkl", "wb") as f:
-        pickle.dump(training_data, f)
+    # with open("training_data.pkl", "wb") as f:
+    #     pickle.dump(training_data, f)
 
 # BEST SCORE: (0.25 seconds per move)
 # SCORE:  36848
