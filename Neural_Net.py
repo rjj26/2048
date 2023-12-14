@@ -43,7 +43,7 @@ def load_python_data():
 ### C++ data used from running this established expectimax implementation: https://github.com/nneonneo/2048-ai.git 
 ###Using supervised learning method to record this algorithms state action pairs to train NN
 def load_cpp_data():
-    with open("training_data0.txt", "r") as f:
+    with open("supervised_training.txt", "r") as f:
         
         training_data = f.readlines()
 
@@ -95,11 +95,11 @@ model = keras.models.Sequential()
 #convolutional filter, treat it as a grid image
 layer1 = keras.layers.Reshape( (4,4,1), input_shape=(4,4) )
 #first num = how many convolution filters in layer to train
-layer2 = keras.layers.Conv2D(5000, [4, 4], activation='relu' )
+layer2 = keras.layers.Conv2D(10000, [4, 4], activation='relu' )
 layer3 = keras.layers.Flatten()
 #how many perceptrons are in this layer
-layer4 = keras.layers.Dense( 256, activation='relu' )
-layer5 = keras.layers.Dense( 64, activation='relu' )
+layer4 = keras.layers.Dense( 512, activation='relu' )
+layer5 = keras.layers.Dense( 128, activation='relu' )
 #output layer has 4 perceptrons to choose action, pick whatever neuron has highest activation value
 layer6 = keras.layers.Dense( 4, activation='softmax' )
 
@@ -112,12 +112,12 @@ model.add( layer6 )
 
 model.compile( optimizer=keras.optimizers.Adam(learning_rate=0.01), loss='categorical_crossentropy', metrics=['acc'] )
 
-early_stopping = keras.callbacks.EarlyStopping( monitor='val_loss', patience=60 )
-lr_reduction = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=.5, patience=20, verbose=1 )
+early_stopping = keras.callbacks.EarlyStopping( monitor='val_loss', patience=20 )
+lr_reduction = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=.5, patience=5, verbose=1 )
 
 model.summary()
 
 model.fit( x_train, y_train, validation_data=(x_val, y_val), batch_size=200, epochs=10000, 
            verbose=1, callbacks=[early_stopping, lr_reduction] )
 
-model.save("Attempt0.keras")
+model.save("Supervised_classification2.keras")
