@@ -6,6 +6,7 @@ from random_player import random_policy
 from greedy import greedy_policy
 from MCTS_avgscore import mcts_avg_policy
 from MCTS_maxmoves import mcts_max_policy
+from MCTS_heuristics import mcts_heuristics_policy
 
 def calc_score(scores):
     score = sum(scores) / len(scores)
@@ -47,22 +48,25 @@ def display_policy(policy, name, iterations, count=False):
 
 if __name__ == "__main__":
     iterations = 100
-    baseline1 = random_policy()
-    baseline2 = greedy_policy(game)
-    policy1 = mcts_avg_policy(0.05)
-    policy2 = mcts_max_policy(0.05)
+    # baseline1 = random_policy()
+    # baseline2 = greedy_policy(game)
+    # policy1 = mcts_avg_policy(0.05)
+    # policy2 = mcts_max_policy(0.05)
+    policy3 = mcts_heuristics_policy(0.05)
 
-    display_policy(baseline1, "random", iterations)
-    display_policy(baseline2, "greedy", iterations)
+    # display_policy(baseline1, "random", iterations)
+    # display_policy(baseline2, "greedy", iterations)
     # display_policy(policy1, "mcts average", iterations)
-    display_policy(policy2, "mcts max depth", iterations, count=True)
+    # display_policy(policy2, "mcts max depth", iterations, count=True)
+    display_policy(policy3, "mcts heuristics", iterations, count=True)
 
 
 """
-SCORING: 100 iterations
+SCORING:
 -----------------------
 
-mcts on max depth: ~1hr
+mcts on max depth: ~1hr, 100 iterations
 -> Average Score: 12354.56
 -> Tile Percentage: {512: 35.0, 1024: 46.0, 2048: 12.0, 4096: 0.0}
+-> Max Score: 32488 (tile=2048)
 """
