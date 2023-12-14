@@ -137,7 +137,7 @@ def mcts_max_policy(cpu_time):
     return fxn
 
 if __name__ == "__main__":
-    # start_time = time.time()
+    start_time = time.time()
 
     #30 mins = 1800
     while time.time() < start_time + 25000:
