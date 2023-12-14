@@ -370,13 +370,13 @@ def get_successor_state(matrix, action):
 	if action == "up":
 		move_up(successor)
 	
-	if action == "down":
+	elif action == "down":
 		move_down(successor)
 	
-	if action == "left":
+	elif action == "left":
 		move_left(successor)
 	
-	if action == "right":
+	elif action == "right":
 		move_right(successor)
 
 	add_random_tile(successor)

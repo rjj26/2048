@@ -6,6 +6,7 @@ from random_player import random_policy
 from greedy import greedy_policy
 from MCTS_avgscore import mcts_avg_policy
 from MCTS_maxmoves import mcts_max_policy
+from MCTS_heuristics import mcts_heuristics_policy
 
 def calc_score(scores):
     score = sum(scores) / len(scores)
@@ -47,15 +48,17 @@ def display_policy(policy, name, iterations, count=False):
 
 if __name__ == "__main__":
     iterations = 100
-    baseline1 = random_policy()
-    baseline2 = greedy_policy(game)
-    policy1 = mcts_avg_policy(0.05)
-    policy2 = mcts_max_policy(0.05)
+    # baseline1 = random_policy()
+    # baseline2 = greedy_policy(game)
+    # policy1 = mcts_avg_policy(0.05)
+    # policy2 = mcts_max_policy(0.05)
+    policy3 = mcts_heuristics_policy(0.05)
 
     # display_policy(baseline1, "random", iterations)
     # display_policy(baseline2, "greedy", iterations)
     # display_policy(policy1, "mcts average", iterations)
-    display_policy(policy2, "mcts max depth", iterations, count=True)
+    # display_policy(policy2, "mcts max depth", iterations, count=True)
+    display_policy(policy3, "mcts heuristics", iterations, count=True)
 
 
 """
