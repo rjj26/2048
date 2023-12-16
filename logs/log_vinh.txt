@@ -1,0 +1,30 @@
+ESTIMATE of time to complete assignment: 12 hours
+
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+12/10 7:00pm   1:00  helped Reese implement the framework for our project: implementing basic baseline players 
+                     (random and greedy), make classes for the MCTS agents, and testing script to evalutate agents
+                     with various statistics
+12/11 7:00pm   4:00  worked on MCTS implementation (standard and heuristics); researched what heuristics are good
+                     for 2048 (read literature, git repos, etc.) and decided on 4-5; wrote optimizer script (located in 
+                      `other_files` folder) and ran thousands of iterations to try to find optimal weights for the heuristics 
+                     (ran in background, but elapsed time for fine-tuning was over a couple of days); 
+                     standard implemntation inspired from PSET 4, heuristics implementation was
+                     inspired by Reese's version 0 that used max moves instead of score (his file located in `other_files` folder)
+12/13 11:00am  2:00  time spent on laptop to check heuristics optimization from script; checked every few hours of the days
+12/15 6:00pm   4:30  finished fine-tuning heuristics; wrote a more robust test script; started working on a CNN Regression model
+                     that would predict a score based on a board state (obtain training data, trainined model, implement as agent); 
+                     idea was to mimic the heuristics code but make it faster with the model; 
+                     by training on expert data the model in theory should be able to evalute the value of a board (accounting
+                     for both immediate reward (score) and future value (positioning)); model doesn't work that well so decided to not submit
+                     as part of project; however, used Reese's model and implemented that into an MCTS agent
+12/16 1:00pm   2:30  put description and information in test script; made READme for more robust description of the project, organized file 
+                     file structure; wrote a greedy agent that also used heuristics
+               ----
+              14:00 TOTAL time spent
+
+
+DISCUSSION
+A lot of time was used for fine-tuning weights and training models (not included in the time log). The implementations of
+the agents were relatively straightforward, but trying to find the best parameters took a lot of trial and error.
