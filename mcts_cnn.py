@@ -153,7 +153,7 @@ class MCTS_HEURISTICS:
         # log base anything of 1 = 0
         new = np.log2(new)
         new = new/16.0
-        new = np.expand_dims(new, axis=3)  # Change this line
+        new = np.expand_dims(new, axis=3)  
 
         return new
     

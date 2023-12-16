@@ -6,6 +6,7 @@ from mcts import mcts_avg_policy
 from mcts_heuristics import mcts_heuristics_policy
 
 """ testing script to compare all agents
+
     group members: Reese Johnson '24 and Vinh Tran '25
 
     game description: https://play2048.co/ (we implemented our own version to be able to take in our policies)
@@ -19,7 +20,7 @@ from mcts_heuristics import mcts_heuristics_policy
         - we programmed various agents to try to achieve the 2048 
         - our primary agents are 
             (1) mcts (we set time per move at 0.05 for all mcts agents)
-            (2) supervised learning models with different variations
+            (2) supervised learning model (CNN) that uses state action pairs
         - our results are stated below (on 100 iterations of the game):
 
     how to run: python3 test.py in terminal to see performance of all agents
@@ -41,8 +42,6 @@ from mcts_heuristics import mcts_heuristics_policy
 | mcts w/ neural network (determines move): |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | SL neural network model (classification): |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| SL neural network model (regression):     |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 * a more descriptive description/analysis will be provided on our READme file if interested
@@ -122,16 +121,3 @@ if __name__ == "__main__":
     # display_policy(baseline_greedy_heuristics, "greedy (heuristics) agent", iterations)
     display_policy(policy_mcts, "mcts standard", iterations)
     display_policy(policy_mcts_enhanced, "mcts heuristics", iterations, count=True)
-
-
-"""
-Best SCORING:
------------------------
-mcts with heuristics (0.0025, 0.003, 0.003, 0.004, 0, 1.0): 100 iterations
--> Average Score: 14191.0
--> Tile Percentage: {256: 8.0, 512: 22.0, 1024: 51.0, 2048: 19.0, 4096: 0.0}
--> Max Score: 34380 (tile=2048)** 
--> Score Var: 54835496.12
--> score std: 7399.27
--> Max Tile Variance: 303667.60959999973
-"""
