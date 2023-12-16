@@ -4,11 +4,13 @@ import time
 import game_2048 as game
 
 ###############################################################################
-# I am using the following heuristrics
-# monotonicity
-# smoothness
-# game score
-# movecount
+# I am using the following heuristrics with standard implementation of MCTS: 
+# -----------------------------------------------------------------------------
+# monotonicity - small weight, measures increasing/decreasing tiles in oen direction, penalty for non-mono boards
+# smoothness - small weight, like merge but less strict, penalty on non-smooth boards 
+# merge proximity - smaller weight, measures if adjacent tiles are equal
+# open tiles - smaller weight, good if there are open tiles
+# movecount - heaviest weight, want to make the most amount of moves = higher score
 ###############################################################################
 
 class Node:
@@ -19,11 +21,10 @@ class Node:
         self.children = {}
         self.parent = None
         self.isFullyExpanded = game.is_game_over(self.state)
-        
-        
+                
 class MCTS_HEURISTICS:
-    def __init__(self):
-        pass
+    def __init__(self, weights):
+        self.weights = weights
 
     def search(self, position, input_time, move_count):
         """ actual search function
@@ -237,30 +238,24 @@ class MCTS_HEURISTICS:
     
     def evaluate_state(self, state, moves):
         # Adjust the weights based on experimentation
-        weight_monotonicity = 0.025
-        weight_merges = 0.1
-        weight_open_spaces = 0.1
-        weight_smoothness = 0.075
-        weight_game_score = 0.075
-        weight_moves = 5.0
+        weight_monotonicity = self.weights[0]
+        weight_merges = self.weights[1]
+        weight_open_spaces = self.weights[2]
+        weight_smoothness = self.weights[3]
+        weight_game_score = self.weights[4]
+        weight_moves = self.weights[5]
 
-        monotonicity = self.monotonicity_penalty(state)
-        merges = self.merges(state)
-        open_spaces = self.open_tiles(state)
-        smoothness = self.smoothness(state)
-        game_score = game.game_score(state)
+        monotonicity = self.monotonicity_penalty(state) * weight_monotonicity
+        merges = self.merges(state) * weight_merges
+        open_spaces = self.open_tiles(state) * weight_open_spaces
+        smoothness = self.smoothness(state) * weight_smoothness
+        game_score = game.game_score(state) * weight_game_score
+        move_count = moves * weight_moves
 
         # Combine the scores with weights
-        total_score = (
-            weight_monotonicity *  monotonicity +
-            weight_merges * merges +
-            weight_open_spaces * open_spaces +
-            weight_smoothness * smoothness +
-            weight_game_score * game_score +
-            weight_moves * moves
-        )
+        total_score = monotonicity + merges + open_spaces + smoothness + game_score + move_count
 
-        # print(total_score, monotonicity, merges, open_spaces, smoothness, game_score, moves)
+        # print(total_score, monotonicity, merges, open_spaces, smoothness, game_score, move_count)
     
         return total_score
     
@@ -268,9 +263,9 @@ class MCTS_HEURISTICS:
     # End of Heursitics
     ################################################################
 
-def mcts_heuristics_policy (input_time):
+def mcts_heuristics_policy (input_time, weights):
     def fxn (position, moves, move_count): 
-        m = MCTS_HEURISTICS()
+        m = MCTS_HEURISTICS(weights)
         best_action = m.search(position, input_time, move_count)
 
         if game.is_game_over(position):
@@ -281,14 +276,35 @@ def mcts_heuristics_policy (input_time):
     return fxn
 
 if __name__ == "__main__":
-    game.simulate_count_moves(mcts_heuristics_policy(0.05), show_board=True, show_score=True)
-    # game.simulate_game(mcts_heuristics_policy(0.05), show_board=True, show_score=True)
+    game.simulate_count_moves(mcts_heuristics_policy(0.05, [0.001, 0, 0, 0.001, 0, 1.0]), show_board=True, show_score=True)
 
 
 """
+Data from optimizing weights:
+
 --------------------------
-Iteration: 94
-Best weights found: {'mono': 0.48, 'merge': 1.02, 'open': 1.01, 'smooth': 0.33, 'score/tile': 1.38, 'num moves': 0.99}
-Best score found: 27036
+Iteration: 18
+Best weights found: {'mono': 0.0015, 'merge': 0.0007, 'open': 0.0037, 'smooth': 0.0008, 'score/tile': 0.0, 'num moves': 1.0}
+Best score found: 33244
+Best tile found: 2048
+--------------------------
+Iteration: 25
+Best weights found: {'mono': 0.0041, 'merge': 0.007, 'open': 0.0016, 'smooth': 0.0078, 'score/tile': 0.0, 'num moves': 1.0}
+Best score found: 27256
+Best tile found: 2048
+--------------------------
+Iteration: 37
+Best weights found: {'mono': 0.004, 'merge': 0.004, 'open': 0.0001, 'smooth': 0.0026, 'score/tile': 0.0, 'num moves': 1.0}
+Best score found: 26920
+Best tile found: 2048
+--------------------------
+Iteration: 9
+Best weights found: {'mono': 0.0009, 'merge': 0.0066, 'open': 0.0062, 'smooth': 0.0061, 'score/tile': 0.0, 'num moves': 1.0}
+Best score found: 25840
+Best tile found: 2048
+--------------------------
+Iteration: 22
+Best weights found: {'mono': 0.0036, 'merge': 0.0002, 'open': 0.0047, 'smooth': 0.0035, 'score/tile': 0.0, 'num moves': 1.0}
+Best score found: 23696
 Best tile found: 2048
 """

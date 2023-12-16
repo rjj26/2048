@@ -16,6 +16,7 @@ def NN_policy(matrix, moves):
     scores = model.predict(state)
 
     move_rankings = np.argsort(-scores[0,:])
+    # print(move_rankings)
     move_names = ["up", "down", "left", "right"]
 
     for move in move_rankings:

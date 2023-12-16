@@ -254,6 +254,7 @@ def move_down(mat):
 def simulate_game(policy, show_board=False, show_score=False):
 	matrix = start_game()
 	moves = get_all_moves(matrix)
+	print("moves from game:", moves)
 
 	score = game_score(matrix)
 
