@@ -26,6 +26,9 @@ from mcts_heuristics import mcts_heuristics_policy
     how to run test scripts: 
         - to run main testing script (this one): 
             run: python3 test_main.py
+            note: we set time for mcts to 0.01 (but data in table used 0.05) for submission purposes
+                  because 100 iterations takes really long with mcts (hundreds of moves), feel free to run
+                  test below to see other time variations (performs better with more time)
 
         - to run test script to test mcts agents with time variations (because it would take hours if we did any time above 0.05)
             run: python3 test_mcts.py
@@ -37,7 +40,7 @@ from mcts_heuristics import mcts_heuristics_policy
 
         (note) may need to do pip3 install requirements.txt if you local computer doesn't have the packages
 
-RESULTS: 100 iterations (mcts agents get 0.05 seconds for move)
+RESULTS: data collected 100 iterations (mcts agents get 0.05 seconds for move)
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | AGENT                                     | AVG SCORE (& MAX SCORE) | TILE DISTRIBUTION                                               | STD DEV |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
