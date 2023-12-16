@@ -47,7 +47,7 @@ credit: C++ data used from running this established expectimax implementation: h
   
 ### Other Agents (Not Submitted)
 
-1.**Regression Model**
+1. **Regression Model**
    - SL model using Regression Convolutional Neural Network: doesn't perform well enough (time to train efficiently out of scope of project) but it is a cool idea
    - Input: State
    - Output: Predicted Score (not literal score, but the potential value of the current state ~ similar to heuristics)
@@ -57,7 +57,7 @@ credit: C++ data used from running this established expectimax implementation: h
 
 **Specifications:** 100 iterations of the game, time allowed for mcts agents was 0.05s
 
-**How to Run:** `python3 test.py` to see all our agents' performances
+**How to Run:** `python3 test.py` to see all of our agents' performances
 
 
 | AGENT | AVG SCORE (& MAX) | TILE DISTRIBUTION | STD DEV |
