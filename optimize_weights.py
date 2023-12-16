@@ -3,7 +3,7 @@ import game_2048 as game
 from MCTS_heuristics import mcts_heuristics_policy
 
 # global var define optimal ranges to test
-ranges = [(0.41, 0.46), (0.0, 0.0), (0.0, 0.0), (0.1, 0.18), (3.6, 4.6), (0.0, 0.0)]
+ranges = [(0.0, 0.005), (0.0, 0.007), (0.0, 0.008), (0.0, 0.008), (0.0, 0.0), (1.0, 1.0)]
 
 def random_search(iterations, top_n):
     best_weights = []
@@ -12,7 +12,7 @@ def random_search(iterations, top_n):
     best_iterations = []
 
     for i in range(iterations):
-        current_weights = [round(random.uniform(low, high), 2) for low, high in ranges]
+        current_weights = [round(random.uniform(low, high), 4) for low, high in ranges]
 
         policy_function = mcts_heuristics_policy(0.05, current_weights)
         average_score, tile = game.simulate_count_moves(policy_function)
@@ -48,8 +48,8 @@ def random_search(iterations, top_n):
     return best_weights, best_scores, best_tiles, best_iterations
 
 if __name__ == "__main__":
-    num_iterations = 100
-    top_n = 10
+    num_iterations = 50
+    top_n = 5
 
     # perform random search for weights
     best_weights_found, best_score_found, best_tile_found, best_iter_found = random_search(num_iterations, top_n)
