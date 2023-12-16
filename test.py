@@ -14,7 +14,7 @@ from mcts_heuristics import mcts_heuristics_policy
         - scoring is based on merging tiles with the same value, which accumulates 
         - the objective is to obtain (or pass) the 2048 tile 
         - the game terminates when there are no free spaces left and no tiles can be merged
-        
+
     code description:
         - we programmed various agents to try to achieve the 2048 
         - our primary agents are 
