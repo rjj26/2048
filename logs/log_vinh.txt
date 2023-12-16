@@ -26,5 +26,6 @@ Date  Started  Spent Work completed
 
 
 DISCUSSION
-A lot of time was used for fine-tuning weights and training models (not included in the time log). The implementations of
-the agents were relatively straightforward, but trying to find the best parameters took a lot of trial and error.
+A lot of time was used for fine-tuning weights and training models (not included in the time log) that may not be 
+reflected in our code or log files. The implementations of the agents were relatively straightforward, but trying 
+to find the best parameters took a lot of trial and error.
