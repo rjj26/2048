@@ -33,8 +33,8 @@
       4. open tiles - measures number of open tiles on board
       5. move count - biasing agent to go for branch with most moves ~ equivalent to trying to obtain highest score
    
-### Supervised Learning Neural Network
-note: we decided to train our NN using expert data from one of the highest performing 2048 agents publically available
+### Supervised Learning Convolutional Neural Network
+note: we decided to train our CNN using expert data from one of the highest performing 2048 agents publically available
 
 credit: C++ data used from running this established expectimax implementation: https://github.com/nneonneo/2048-ai.git 
 
@@ -42,13 +42,16 @@ credit: C++ data used from running this established expectimax implementation: h
     - Input: State
     - Output: Optimal (Predicted) Move/Action
       
-2. **Regression Model**
-   - Input: State
-   - Output: Predicted Score (not literal score, but the potential value of the current state ~ similar to heuristics)
+2. **MCTS Enchanced by Classification model**
+    - In simulation stage, instead of choosing a random move from the legal moves, we use the model to predict the optimal move instead
   
 ### Other Agents (Not Submitted)
 
-1. 
+1.**Regression Model**
+   - SL model using Regression Convolutional Neural Network: doesn't perform well enough (time to train efficiently out of scope of project) but it is a cool idea
+   - Input: State
+   - Output: Predicted Score (not literal score, but the potential value of the current state ~ similar to heuristics)
+   - Potential: Use similar to greedy agent or incorporate into an MCTS
 
 ### Test Results
 
@@ -66,7 +69,6 @@ credit: C++ data used from running this established expectimax implementation: h
 | **mcts w/ heuristics** | 14191.0 (34380) | { 256: 8.0, 512: 22.0, 1024: 51.0, 2048: 19.0 } | 7399.27 |
 | **mcts w/ neural network** | | | |
 | **SL classification** | | | |
-| **SL regression** | | | | 
 
 
 ### Folder Structure:
