@@ -1,4 +1,3 @@
-import tensorflow as tf
 from tensorflow import keras
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
@@ -6,7 +5,8 @@ import numpy as np
 
 # Load data
 def load_data():
-    with open("/Users/vinhtran/Desktop/junior/fall/CS474/finalproj/sl_training_data/training_data_reward.txt", "r") as f:
+
+    with open("../sl_training_data/sample_training_data_reward.txt", "r") as f:
         training_data = f.readlines()
 
     states = []
@@ -83,4 +83,4 @@ if __name__ == "__main__":
     model.fit(x_train, y_train, validation_data=(x_val, y_val), batch_size=128, epochs=50,
             verbose=1, callbacks=[early_stopping, lr_reduction])
 
-    model.save("nn_reward_model_regression.keras")
+    model.save("cnn_reward_model_regression.keras")

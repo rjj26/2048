@@ -1,6 +1,8 @@
 import random
 import math
 import time
+import sys
+sys.path.append('../')
 import game_2048
 import pickle
 

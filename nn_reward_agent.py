@@ -1,3 +1,4 @@
+import os
 import keras
 import game_2048 as game
 import numpy as np
@@ -38,8 +39,9 @@ def nn_rewards_policy(game):
     return nn_score_agent
 
 
-if __name__ == "__main__":
-    model = keras.models.load_model("nn_reward_model_regression.keras") 
+if __name__ == "__main__":    
+    current_directory = os.getcwd()
+    model = keras.models.load_model(current_directory + "/sl_models/cnn_reward_model_regression.keras") 
     nn_agent = nn_rewards_policy(game)
 
     # matrix = [
