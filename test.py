@@ -22,6 +22,9 @@ from mcts_heuristics import mcts_heuristics_policy
             (2) supervised learning models with different variations
         - our results are stated below (on 100 iterations of the game):
 
+    how to run: python3 test.py in terminal to see performance of all agents
+        - may need to do pip3 install requirements.txt if you local computer doesn't have the packages
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | AGENT                                     | AVG SCORE (& MAX SCORE) | TILE DISTRIBUTION                                               | STD DEV |
 ---------------------------------------------------------------------------------------------------------------------------------------------------

@@ -6,7 +6,7 @@ import game_2048 as game
 ###############################################################################
 # I am using the following heuristrics with standard implementation of MCTS: 
 # -----------------------------------------------------------------------------
-# monotonicity - small weight, measures increasing/decreasing tiles in oen direction, penalty for non-mono boards
+# monotonicity - small weight, measures increasing/decreasing tiles in one direction, penalty for non-mono boards
 # smoothness - small weight, like merge but less strict, penalty on non-smooth boards 
 # merge proximity - smaller weight, measures if adjacent tiles are equal
 # open tiles - smaller weight, good if there are open tiles
