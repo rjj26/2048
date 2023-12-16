@@ -276,7 +276,9 @@ def mcts_heuristics_policy (input_time, weights):
     return fxn
 
 if __name__ == "__main__":
-    game.simulate_count_moves(mcts_heuristics_policy(0.05, [0.001, 0, 0, 0.001, 0, 1.0]), show_board=True, show_score=True)
+    weights1 = [0.001, 0, 0, 0.001, 0, 1.0]
+    weights2 = [0.0025, 0.003, 0.003, 0.004, 0, 1.0]
+    game.simulate_count_moves(mcts_heuristics_policy(0.05, weights2), show_board=True, show_score=True)
 
 
 """

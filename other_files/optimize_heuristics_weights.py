@@ -1,6 +1,8 @@
 import random
+import sys
+sys.path.append('../')
 import game_2048 as game
-from MCTS_heuristics import mcts_heuristics_policy
+from mcts_heuristics import mcts_heuristics_policy
 
 # global var define optimal ranges to test
 ranges = [(0.0, 0.005), (0.0, 0.007), (0.0, 0.008), (0.0, 0.008), (0.0, 0.0), (1.0, 1.0)]

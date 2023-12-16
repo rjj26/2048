@@ -6,11 +6,9 @@ import numpy as np
 import game_2048 as game
 
 ###############################################################################
-# I am using the following heuristrics
-# monotonicity
-# smoothness
-# game score
-# movecount
+# implements supervised learning NN model
+# input: state, output: predicted score (reward) accounting for future board positions (essentially heuristics)
+# mcts uses this to to evaluate the score of a move, which in theory, should fine tune exploration/eploitation
 ###############################################################################
 
 class Node:
@@ -300,5 +298,5 @@ def mcts_heuristics_policy (input_time, weights, model):
     return fxn
 
 if __name__ == "__main__":
-    model = keras.models.load_model("nn_reward_model_regression.keras")
+    model = keras.models.load_model("cnn_reward_model_regression.keras")
     game.simulate_count_moves(mcts_heuristics_policy(0.05, [0.001, 0, 0, 0.001, 0, 1.0], model), show_board=True, show_score=True)
