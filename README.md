@@ -25,7 +25,7 @@
 ### MCTS
 1. **Standard Implementation:** looks for best reward i.e. score
 2. **Enhanced with Heuristics**
-    - this uses various heuristics in order to determine the optimal state instead of just basing off the score reward because position matters a lot in a gmae like 2048
+    - this uses various heuristics in order to determine the optimal state instead of just basing off the score reward because position matters a lot in a game like 2048
     - we used the following heurisitcs:
       1. monotonicity - measures increasing/decreasing tiles in one direction, penalty for non-monotonic boards
       2. smoothness - measures tiles of similar value that are adjacent, penalty on non-smooth boards
@@ -57,8 +57,12 @@ credit: C++ data used from running this established expectimax implementation: h
 
 **Specifications:** 100 iterations of the game, time allowed for mcts agents was 0.05s
 
-**How to Run:** `python3 test.py` to see all of our agents' performances
+**How to Run:** 
+1. `python3 test_main.py` to see all of our agents' performances (main test script)
+2. `python3 test_mcts.py` to see mcts agents' performances with varying time allowed
+3. `python3 any_agent_name.py` to see an individual agent play 1 game
 
+**Results**
 
 | AGENT | AVG SCORE (& MAX) | TILE DISTRIBUTION | STD DEV |
 | --- | --- | --- | --- |
@@ -78,4 +82,5 @@ credit: C++ data used from running this established expectimax implementation: h
 - `\sl_training_data`: contains a sample file of what we used to train our models (the real training model was too large)
 - `\game_2048.py`: 2048 game that simulates game with given policy
 - `\test.py`: our testing script that evaluates performance of the agents
+- `\`: rest of files contain our agents
 

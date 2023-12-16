@@ -1,11 +1,9 @@
 import numpy as np
 import game_2048 as game
-from random_agent import random_policy
-from greedy_agent import greedy_policy
 from mcts import mcts_avg_policy
 from mcts_heuristics import mcts_heuristics_policy
 
-""" testing script to compare all agents
+""" MCTS testing script to compare all mcts agents
 
     group members: Reese Johnson '24 and Vinh Tran '25
 
@@ -17,31 +15,22 @@ from mcts_heuristics import mcts_heuristics_policy
         - the game terminates when there are no free spaces left and no tiles can be merged
 
     code description:
-        - we programmed various agents to try to achieve the 2048 
-        - our primary agents are 
-            (1) mcts (we set time per move at 0.05 for all mcts agents)
-            (2) supervised learning model (CNN) that uses state action pairs
-        - our results are stated below (on 100 iterations of the game):
+        - mcts standard: uses score to determine optimal move
+        - mcts heuristics: uses a variety of heuristics to determine move that results in best state 
+        - mcts cnn: uses model to predict optimal move to play during simulation phase
 
-    how to run: python3 test.py in terminal to see performance of all agents
+    how to run: python3 test_mcts.py in terminal to see performance of all mcts  agents
         - may need to do pip3 install requirements.txt if you local computer doesn't have the packages
 
+RESULTS: on 5 iterations because anythin past 0.5 takes a very, very long time (each game last 100s of moves), feel free to change iterations
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | AGENT                                     | AVG SCORE (& MAX SCORE) | TILE DISTRIBUTION                                               | STD DEV |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-| random moves (baseline):                  | 938.92 (2916)           | { 64: 41.0, 128: 40.0, 256: 3.0 }                               | 458.04  |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| greedy (baseline):                        | 2019.32 (7096)          | { 64: 13.0, 128: 44.0, 256: 42.0, 512: 1.0 }                    | 965.33  |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| greedy w/ heuristics (baseline):          | 8938.76 (24928)         | { 128: 2.0, 256: 14.0, 512: 56.0, 1024: 26.0, 2048: 2.0 }       | 4291.32 |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| mcts (standard):                          | 6689.96 (16474)         | { 128: 2.0, 256: 24.0, 512: 55.0, 1024: 19.0 }                  | 3193.49 |
+| mcts (standard): 0.05                     | 6689.96 (16474)         | { 128: 2.0, 256: 24.0, 512: 55.0, 1024: 19.0 }                  | 3193.49 |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | mcts w/ heuristics:                       | 14191.0 (34380)         | { 256: 8.0, 512: 22.0, 1024: 51.0, 2048: 19.0 }                 | 7399.27 |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | mcts w/ neural network (determines move): |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| SL neural network model (classification): |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 * a more descriptive description/analysis will be provided on our READme file if interested
@@ -99,25 +88,32 @@ def display_policy(policy, name, iterations, count=False):
     res_tile = calc_tile(tiles)
     res_score_var = calc_stddev(average_score)
 
-    print(f"\n\nAverage Score: {res_score}")
+    print(f"\nAverage Score: {res_score}")
     print(f"Max Score: {res_max_score}")
     print(f"Score Std Dev: {res_score_var}")
     print(f"Tile Distribution: {res_tile}\n")
 
 if __name__ == "__main__":
-    iterations = 100
-    mcts_time = 0.05
+    iterations = 5
+    mcts_time1 = 0.05
+    mcts_time2 = 0.5
+    mcts_time3 = 1.0
 
-    # instantiate objects of policy
-    baseline_random = random_policy()
-    baseline_greedy = greedy_policy(game, heuristics=False)
-    baseline_greedy_heuristics = greedy_policy(game, heuristics=True)
-    policy_mcts = mcts_avg_policy(mcts_time)
-    policy_mcts_enhanced = mcts_heuristics_policy(mcts_time, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
+    policy_mcts1 = mcts_avg_policy(mcts_time1)
+    policy_mcts_enhanced1 = mcts_heuristics_policy(mcts_time1, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
 
-    # display policy results in terminal
-    # display_policy(baseline_random, "random agent", iterations)
-    # display_policy(baseline_greedy, "greedy agent", iterations)
-    # display_policy(baseline_greedy_heuristics, "greedy (heuristics) agent", iterations)
-    display_policy(policy_mcts, "mcts standard", iterations)
-    display_policy(policy_mcts_enhanced, "mcts heuristics", iterations, count=True)
+    policy_mcts2 = mcts_avg_policy(mcts_time2)
+    policy_mcts_enhanced2 = mcts_heuristics_policy(mcts_time2, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
+
+    policy_mcts3 = mcts_avg_policy(mcts_time3)
+    policy_mcts_enhanced3 = mcts_heuristics_policy(mcts_time3, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
+
+
+    display_policy(policy_mcts1, "mcts, time=0.05", iterations)
+    display_policy(policy_mcts_enhanced1, "heuristics, time=0.05", iterations, count=True)
+
+    display_policy(policy_mcts2, "mcts, time=0.5", iterations)
+    display_policy(policy_mcts_enhanced2, "heuristics, time=0.5", iterations, count=True)
+
+    display_policy(policy_mcts3, "mcts, time=1.0", iterations)
+    display_policy(policy_mcts_enhanced3, "heuristics, time=1.0", iterations, count=True)

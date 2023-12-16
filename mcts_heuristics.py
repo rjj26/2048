@@ -283,7 +283,6 @@ if __name__ == "__main__":
 
 """
 Data from optimizing weights:
-
 --------------------------
 Iteration: 18
 Best weights found: {'mono': 0.0015, 'merge': 0.0007, 'open': 0.0037, 'smooth': 0.0008, 'score/tile': 0.0, 'num moves': 1.0}
