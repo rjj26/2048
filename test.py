@@ -6,13 +6,15 @@ from mcts import mcts_avg_policy
 from mcts_heuristics import mcts_heuristics_policy
 
 """ testing script to compare all agents
-    
+    group members: Reese Johnson '24 and Vinh Tran '25
+
     game description: https://play2048.co/ (we implemented our own version to be able to take in our policies)
         - single-player game on a 4x4 grid
         - on each turn: the user decides how to slide the tiles and a 2 or 4 tile spawns randomly on an open space
         - scoring is based on merging tiles with the same value, which accumulates 
         - the objective is to obtain (or pass) the 2048 tile 
         - the game terminates when there are no free spaces left and no tiles can be merged
+        
     code description:
         - we programmed various agents to try to achieve the 2048 
         - our primary agents are 
