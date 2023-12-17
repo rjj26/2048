@@ -21,17 +21,32 @@ from mcts_heuristics import mcts_heuristics_policy
 
     how to run: python3 test_mcts.py in terminal to see performance of all mcts  agents
         - may need to do pip3 install requirements.txt if you local computer doesn't have the packages
+        (note) code is set to run 5 iterations because it is very time intensive (but results are based off 10 iterations)
+               but more iterations and time yields better and more consistent results, feel free to change iterations
 
-RESULTS: on 5 iterations because anythin past 0.5 takes a very, very long time (each game last 100s of moves), feel free to change iterations
----------------------------------------------------------------------------------------------------------------------------------------------------
-| AGENT                                     | AVG SCORE (& MAX SCORE) | TILE DISTRIBUTION                                               | STD DEV |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| mcts (standard): 0.05                     | 6689.96 (16474)         | { 128: 2.0, 256: 24.0, 512: 55.0, 1024: 19.0 }                  | 3193.49 |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| mcts w/ heuristics:                       | 14191.0 (34380)         | { 256: 8.0, 512: 22.0, 1024: 51.0, 2048: 19.0 }                 | 7399.27 |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| mcts w/ neural network (determines move): |
----------------------------------------------------------------------------------------------------------------------------------------------------
+RESULTS: on 10 iterations because anything past 0.5 takes a very, very long time (each game last 100s of moves) 
+---------------------------------------------------------------------------------------------------------------------------------------
+| AGENT                         | AVG SCORE (& MAX SCORE) | TILE DISTRIBUTION                                               | STD DEV |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts: 0.05s                   | 8637.6 (16088)          | { 256: 10.0, 512: 60.0, 1024: 30.0 }                            | 3511.79 |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts w/ heuristics: 0.05s     | 13255.6 (23800)         | { 256: 10.0, 512: 20.0, 1024: 50.0, 2048: 20.0 }                | 6041.13 |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts w/ neural network: 0.05s |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts: 0.50s                   | 8622.8 (15336)          | { 256: 30.0, 512: 30.0, 1024: 40.0 }                            | 4675.09 |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts w/ heuristics: 0.50s     | 13255.6 (23800)         | { 256: 10.0, 512: 20.0, 1024: 50.0, 2048: 20.0 }                | 6041.13 |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts w/ neural network: 0.50s |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts: 1.00s                   | 8637.6 (16088)          | { 256: 10.0, 512: 60.0, 1024: 30.0 }                            | 3511.79 |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts w/ heuristics: 1.00s     | 13255.6 (23800)         | { 256: 10.0, 512: 20.0, 1024: 50.0, 2048: 20.0 }                | 6041.13 |
+---------------------------------------------------------------------------------------------------------------------------------------
+| mcts w/ neural network: 1.00s |
+---------------------------------------------------------------------------------------------------------------------------------------
+
 
 * a more descriptive description/analysis will be provided on our READme file if interested
 
@@ -94,20 +109,22 @@ def display_policy(policy, name, iterations, count=False):
     print(f"Tile Distribution: {res_tile}\n")
 
 if __name__ == "__main__":
-    iterations = 5
+    iterations = 5 # change iterations as necessary
     mcts_time1 = 0.05
     mcts_time2 = 0.5
     mcts_time3 = 1.0
 
+    # 0.05 seconds
     policy_mcts1 = mcts_avg_policy(mcts_time1)
     policy_mcts_enhanced1 = mcts_heuristics_policy(mcts_time1, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
 
+    # 0.5 seconds
     policy_mcts2 = mcts_avg_policy(mcts_time2)
     policy_mcts_enhanced2 = mcts_heuristics_policy(mcts_time2, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
 
+    # 1.0 seconds
     policy_mcts3 = mcts_avg_policy(mcts_time3)
     policy_mcts_enhanced3 = mcts_heuristics_policy(mcts_time3, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
-
 
     display_policy(policy_mcts1, "mcts, time=0.05", iterations)
     display_policy(policy_mcts_enhanced1, "heuristics, time=0.05", iterations, count=True)

@@ -41,8 +41,9 @@ credit: C++ data used from running this established expectimax implementation: h
 1. **Classification Model**
     - Input: State
     - Output: Optimal (Predicted) Move/Action
+    - File: 
       
-2. **MCTS Enchanced by Classification model**
+2. **MCTS Enchanced by Classification Model**
     - In simulation stage, instead of choosing a random move from the legal moves, we use the model to predict the optimal move instead
   
 ### Other Agents (Not Submitted)
@@ -52,17 +53,18 @@ credit: C++ data used from running this established expectimax implementation: h
    - Input: State
    - Output: Predicted Score (not literal score, but the potential value of the current state ~ similar to heuristics)
    - Potential: Use similar to greedy agent or incorporate into an MCTS
+   - file: `\sl_models\cnn_reward_model_regression.keras`
 
 ### Test Results
 
-**Specifications:** 100 iterations of the game, time allowed for mcts agents was 0.05s
-
-**How to Run:** 
+**How to Run:** `pip3 install requirements.txt` to install packages (if packages are not on local machine)
 1. `python3 test_main.py` to see all of our agents' performances (main test script)
 2. `python3 test_mcts.py` to see mcts agents' performances with varying time allowed
 3. `python3 any_agent_name.py` to see an individual agent play 1 game
 
-**Results**
+**Specifications:** 100 iterations of the game, time allowed for MCTS agents were 0.05s 
+
+**Results** (from main test)
 
 | AGENT | AVG SCORE (& MAX) | TILE DISTRIBUTION | STD DEV |
 | --- | --- | --- | --- |
@@ -83,4 +85,3 @@ credit: C++ data used from running this established expectimax implementation: h
 - `\game_2048.py`: 2048 game that simulates game with given policy
 - `\test.py`: our testing script that evaluates performance of the agents
 - `\`: rest of files contain our agents
-

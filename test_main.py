@@ -17,9 +17,9 @@ from mcts_heuristics import mcts_heuristics_policy
         - the game terminates when there are no free spaces left and no tiles can be merged
 
     code description:
-        - we programmed various agents to try to achieve the 2048 
+        - we programmed various agents to try to achieve the 2048 tile
         - our primary agents are 
-            (1) mcts
+            (1) mcts (3 versions)
             (2) supervised learning model (CNN) that uses state action pairs
         - our results are stated below (on 100 iterations of the game):
 
@@ -28,9 +28,9 @@ from mcts_heuristics import mcts_heuristics_policy
             run: python3 test_main.py
             note: we set time for mcts to 0.01 (but data in table used 0.05) for submission purposes
                   because 100 iterations takes really long with mcts (hundreds of moves), feel free to run
-                  test below to see other time variations (performs better with more time)
+                  test below to see other time variations (performs better with more time and iterations)
 
-        - to run test script to test mcts agents with time variations (because it would take hours if we did any time above 0.05)
+        - to run test script to test mcts agents with time variations (because it would take hours if we did any time above 0.01)
             run: python3 test_mcts.py
 
         - to run any individual agent for 1 game:
@@ -38,9 +38,9 @@ from mcts_heuristics import mcts_heuristics_policy
             (can use pypy3 for any non-CNN based agent if you want)
             e.g. pypy3 mcts_heuristics.py or python3 mcts_cnn
 
-        (note) may need to do pip3 install requirements.txt if you local computer doesn't have the packages
+        (note) may need to do pip3 install requirements.txt if your local computer doesn't have the packages
 
-RESULTS: data collected 100 iterations (mcts agents get 0.05 seconds for move)
+RESULTS: data collected from 100 iterations (all mcts agents got 0.05 seconds for move)
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | AGENT                                     | AVG SCORE (& MAX SCORE) | TILE DISTRIBUTION                                               | STD DEV |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -121,18 +121,18 @@ def display_policy(policy, name, iterations, count=False):
 
 if __name__ == "__main__":
     iterations = 100
-    mcts_time = 0.05
+    mcts_time = 0.01
 
     # instantiate objects of policy
-    # baseline_random = random_policy()
-    # baseline_greedy = greedy_policy(game, heuristics=False)
-    # baseline_greedy_heuristics = greedy_policy(game, heuristics=True)
+    baseline_random = random_policy()
+    baseline_greedy = greedy_policy(game, heuristics=False)
+    baseline_greedy_heuristics = greedy_policy(game, heuristics=True)
     policy_mcts = mcts_avg_policy(mcts_time)
-    # policy_mcts_enhanced = mcts_heuristics_policy(mcts_time, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
+    policy_mcts_enhanced = mcts_heuristics_policy(mcts_time, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
 
     # display policy results in terminal
-    # display_policy(baseline_random, "random", iterations)
-    # display_policy(baseline_greedy, "greedy", iterations)
-    # display_policy(baseline_greedy_heuristics, "greedy (heuristics)", iterations)
+    display_policy(baseline_random, "random", iterations)
+    display_policy(baseline_greedy, "greedy", iterations)
+    display_policy(baseline_greedy_heuristics, "greedy (heuristics)", iterations)
     display_policy(policy_mcts, "mcts standard", iterations)
-    # display_policy(policy_mcts_enhanced, "mcts heuristics", iterations, count=True)
+    display_policy(policy_mcts_enhanced, "mcts heuristics", iterations, count=True)
