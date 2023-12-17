@@ -15,7 +15,7 @@
 
 ## Code Description:
 - we programmed various agents to try to achieve the 2048 tile (beat the game)
-- we programmed 3 baseline agents (random, greedy, greedy w/ heuristics to compare to our optimal agents (MCTS and SL)
+- we programmed 3 baseline agents (random, greedy, greedy w/ heuristics to compare to our optimal agents (MCTS and SL))
 
 ### Baseline Agents 
 1. **Random:** makes random moves that are legal; this strategy actually performs quite well for a game like 2048
@@ -41,7 +41,7 @@ credit: C++ data used from running this established expectimax implementation: h
 1. **Classification Model**
     - Input: State
     - Output: Optimal (Predicted) Move/Action
-    - File: 
+    - File: `/sl_models/`
       
 2. **MCTS Enchanced by Classification Model**
     - In simulation stage, instead of choosing a random move from the legal moves, we use the model to predict the optimal move instead
@@ -53,7 +53,7 @@ credit: C++ data used from running this established expectimax implementation: h
    - Input: State
    - Output: Predicted Score (not literal score, but the potential value of the current state ~ similar to heuristics)
    - Potential: Use similar to greedy agent or incorporate into an MCTS
-   - file: `\sl_models\cnn_reward_model_regression.keras`
+   - file: `/sl_models/cnn_reward_model_regression.keras`
 
 ### Test Results
 
@@ -64,7 +64,7 @@ credit: C++ data used from running this established expectimax implementation: h
 
 **Specifications:** 100 iterations of the game, time allowed for MCTS agents were 0.05s 
 
-**Results** (from main test)
+**Results** (from main test `test`)
 
 | AGENT | AVG SCORE (& MAX) | TILE DISTRIBUTION | STD DEV |
 | --- | --- | --- | --- |
@@ -78,10 +78,10 @@ credit: C++ data used from running this established expectimax implementation: h
 
 
 ### Folder Structure:
-- `\logs`: contains log files for what each member did for work for the project
-- `\other_files`: contains files that were used to help tune heuristics, train models, initial versions of agents, etc.
-- `\sl_models`: contains models for the supervised learning models
-- `\sl_training_data`: contains a sample file of what we used to train our models (the real training model was too large)
-- `\game_2048.py`: 2048 game that simulates game with given policy
-- `\test.py`: our testing script that evaluates performance of the agents
-- `\`: rest of files contain our agents
+- `/logs`: contains log files for what each member did for work for the project
+- `/other_files`: contains files that were used to help tune heuristics, train models, initial versions of agents, etc.
+- `/sl_models`: contains models for the supervised learning models
+- `/sl_training_data`: contains a sample file of what we used to train our models (the real training model was too large)
+- `game_2048.py`: 2048 game that simulates game with given policy
+- `test.py`: our testing script that evaluates performance of the agents
+- rest of files contain our agents
