@@ -40,7 +40,7 @@ from mcts_heuristics import mcts_heuristics_policy
 
         (note) may need to do pip3 install requirements.txt if your local computer doesn't have the packages
 
-RESULTS: data collected from 100 iterations (all mcts agents got 0.05 seconds for move)
+RESULTS: data collected from 100 iterations (all mcts agents had 0.05 seconds for move)
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | AGENT                                     | AVG SCORE (& MAX SCORE) | TILE DISTRIBUTION                                               | STD DEV |
 ---------------------------------------------------------------------------------------------------------------------------------------------------

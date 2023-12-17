@@ -24,7 +24,8 @@ from mcts_heuristics import mcts_heuristics_policy
         (note) code is set to run 5 iterations because it is very time intensive (but results are based off 10 iterations)
                but more iterations and time yields better and more consistent results, feel free to change iterations
 
-RESULTS: on 10 iterations because anything past 0.5 takes a very, very long time (each game last 100s of moves) 
+RESULTS: on 10 iterations (for 0.05, 0.5) and 5 iterations (for 1.0, why score may be lower)
+         because anything past 0.05 takes a very, very long time (each game last 100s of moves) 
 ---------------------------------------------------------------------------------------------------------------------------------------
 | AGENT                         | AVG SCORE (& MAX SCORE) | TILE DISTRIBUTION                                               | STD DEV |
 ---------------------------------------------------------------------------------------------------------------------------------------
@@ -32,19 +33,19 @@ RESULTS: on 10 iterations because anything past 0.5 takes a very, very long time
 ---------------------------------------------------------------------------------------------------------------------------------------
 | mcts w/ heuristics: 0.05s     | 13255.6 (23800)         | { 256: 10.0, 512: 20.0, 1024: 50.0, 2048: 20.0 }                | 6041.13 |
 ---------------------------------------------------------------------------------------------------------------------------------------
-| mcts w/ neural network: 0.05s |
+| mcts w/ neural network: 0.05s | xxxx
 ---------------------------------------------------------------------------------------------------------------------------------------
 | mcts: 0.50s                   | 8622.8 (15336)          | { 256: 30.0, 512: 30.0, 1024: 40.0 }                            | 4675.09 |
 ---------------------------------------------------------------------------------------------------------------------------------------
-| mcts w/ heuristics: 0.50s     | 13255.6 (23800)         | { 256: 10.0, 512: 20.0, 1024: 50.0, 2048: 20.0 }                | 6041.13 |
+| mcts w/ heuristics: 0.50s     | 16628.8 (33016)         | { 512: 20.0, 1024: 60.0, 2048: 20.0 }                           | 9037.55 |
 ---------------------------------------------------------------------------------------------------------------------------------------
-| mcts w/ neural network: 0.50s |
+| mcts w/ neural network: 0.50s | xxxx
 ---------------------------------------------------------------------------------------------------------------------------------------
-| mcts: 1.00s                   | 8637.6 (16088)          | { 256: 10.0, 512: 60.0, 1024: 30.0 }                            | 3511.79 |
+| mcts: 1.00s                   | 7184.8 (12224)          | { 256: 20.0, 512: 60.0, 1024: 20.0 }                            | 2882.01 |
 ---------------------------------------------------------------------------------------------------------------------------------------
-| mcts w/ heuristics: 1.00s     | 13255.6 (23800)         | { 256: 10.0, 512: 20.0, 1024: 50.0, 2048: 20.0 }                | 6041.13 |
+| mcts w/ heuristics: 1.00s     | 17646.4 (33016)         | { 512: 20.0, 1024: 60.0, 2048: 20.0 }                           | 8357.19 |
 ---------------------------------------------------------------------------------------------------------------------------------------
-| mcts w/ neural network: 1.00s |
+| mcts w/ neural network: 1.00s | xxxx
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -126,10 +127,10 @@ if __name__ == "__main__":
     policy_mcts3 = mcts_avg_policy(mcts_time3)
     policy_mcts_enhanced3 = mcts_heuristics_policy(mcts_time3, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
 
-    display_policy(policy_mcts1, "mcts, time=0.05", iterations)
-    display_policy(policy_mcts_enhanced1, "heuristics, time=0.05", iterations, count=True)
+    # display_policy(policy_mcts1, "mcts, time=0.05", iterations)
+    # display_policy(policy_mcts_enhanced1, "heuristics, time=0.05", iterations, count=True)
 
-    display_policy(policy_mcts2, "mcts, time=0.5", iterations)
+    # display_policy(policy_mcts2, "mcts, time=0.5", iterations)
     display_policy(policy_mcts_enhanced2, "heuristics, time=0.5", iterations, count=True)
 
     display_policy(policy_mcts3, "mcts, time=1.0", iterations)
