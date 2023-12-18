@@ -64,7 +64,7 @@ credit: C++ data used from running this established expectimax implementation: h
 
 **Specifications:** 100 iterations of the game, time allowed for MCTS agents were 0.05s 
 
-**Results** (from main test `test`)
+**Results** (from main test `test_main.py`)
 
 | AGENT | AVG SCORE (& MAX) | TILE DISTRIBUTION | STD DEV |
 | --- | --- | --- | --- |

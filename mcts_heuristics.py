@@ -237,14 +237,13 @@ class MCTS_HEURISTICS:
         return best_move
     
     def evaluate_state(self, state, moves):
-        # Adjust the weights based on experimentation
         weight_monotonicity = self.weights[0]
         weight_merges = self.weights[1]
         weight_open_spaces = self.weights[2]
         weight_smoothness = self.weights[3]
         weight_game_score = self.weights[4]
         weight_moves = self.weights[5]
-
+        
         monotonicity = self.monotonicity_penalty(state) * weight_monotonicity
         merges = self.merges(state) * weight_merges
         open_spaces = self.open_tiles(state) * weight_open_spaces

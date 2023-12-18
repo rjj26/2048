@@ -6,9 +6,9 @@ import numpy as np
 import game_2048 as game
 
 ###############################################################################
-# implements supervised learning NN model
-# input: state, output: predicted score (reward) accounting for future board positions (essentially heuristics)
-# mcts uses this to to evaluate the score of a move, which in theory, should fine tune exploration/eploitation
+# implements supervised learning CNN model
+# input: state, output: predicted action/move 
+# mcts uses this to choose a move instead of random
 ###############################################################################
 
 class Node:
@@ -21,9 +21,8 @@ class Node:
         self.isFullyExpanded = game.is_game_over(self.state)
         
         
-class MCTS_HEURISTICS:
-    def __init__(self, weights, model):
-        self.weights = weights
+class MCTS_CNN:
+    def __init__(self, model):
         self.nn_agent = model
 
     def search(self, position, input_time, move_count):
@@ -94,17 +93,19 @@ class MCTS_HEURISTICS:
             num_moves += 1
             legal_moves = game.get_all_moves(current_state)
 
-            # instead of random, we use heuristics to select a move
-            action = self.select_move_with_heuristics(current_state, legal_moves, num_moves)
+            # instead of random, we use model to select move
+            action = self.select_move_with_heuristics(current_state, legal_moves, num_moves) # put cnn model here to chose move
 
             # action = random.choice(legal_moves)
             current_state = game.get_successor_state(current_state, action)
-        
+
         # evaluate final score using the heuristics
-        # score = self.evaluate_state(current_state, num_moves)
-        temp_state = self.preprocess_state(current_state)
-        predicted_score = model.predict(temp_state)
-        score = np.argmax(predicted_score)
+        score = self.evaluate_state(current_state, num_moves)
+        
+        # if we use regression model:
+        # temp_state = self.preprocess_state(current_state)
+        # predicted_score = model.predict(temp_state)
+        # score = np.argmax(predicted_score)
 
         return score
 
@@ -259,7 +260,6 @@ class MCTS_HEURISTICS:
         return best_move
     
     def evaluate_state(self, state, moves):
-        # Adjust the weights based on experimentation
         weight_monotonicity = self.weights[0]
         weight_merges = self.weights[1]
         weight_open_spaces = self.weights[2]
@@ -285,9 +285,9 @@ class MCTS_HEURISTICS:
     # End of Heursitics
     ################################################################
 
-def mcts_heuristics_policy (input_time, weights, model):
+def mcts_heuristics_policy (input_time, model):
     def fxn (position, moves, move_count): 
-        m = MCTS_HEURISTICS(weights, model)
+        m = MCTS_CNN(model)
         best_action = m.search(position, input_time, move_count)
 
         if game.is_game_over(position):
@@ -298,5 +298,7 @@ def mcts_heuristics_policy (input_time, weights, model):
     return fxn
 
 if __name__ == "__main__":
-    model = keras.models.load_model("cnn_reward_model_regression.keras")
-    game.simulate_count_moves(mcts_heuristics_policy(0.05, [0.001, 0, 0, 0.001, 0, 1.0], model), show_board=True, show_score=True)
+    # weights = [0.0025, 0.003, 0.003, 0.004, 0, 1.0]
+    weights = [0.0, 0.0, 0.0, 0.0, 1.0, 0.0] # only use score weight to see how well the CNN does by itself
+    model = keras.models.load_model("cnn_reward_model_regression.keras") # load reese model here
+    game.simulate_count_moves(mcts_heuristics_policy(0.05, model), show_board=True, show_score=True)

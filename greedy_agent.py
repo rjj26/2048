@@ -102,6 +102,10 @@ def evaluate_state(state, heuristics):
 
     return total_score
 
+################################################################
+# End of Heursitics
+################################################################
+
 def greedy_policy(game, heuristics=False):
     """ baseline agent:
         greedy policy seeks to maximize score at every move
