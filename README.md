@@ -57,7 +57,7 @@ credit: C++ data used from running this established expectimax implementation: h
 
 ### Test Results
 
-**How to Run:** `pip3 install requirements.txt` to install packages (if packages are not on local machine)
+**How to Run:** `pip3 install -r requirements.txt` to install packages (if packages are not on local machine)
 1. `python3 test_main.py` to see all of our agents' performances (main test script)
 2. `python3 test_mcts.py` to see mcts agents' performances with varying time allowed
 3. `python3 any_agent_name.py` to see an individual agent play 1 game
