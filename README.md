@@ -43,8 +43,6 @@ credit: C++ data used from running this established expectimax implementation: h
     - Output: Optimal (Predicted) Move/Action
     - File: `/sl_models/`
       
-2. **MCTS Enchanced by Classification Model**
-    - In simulation stage, instead of choosing a random move from the legal moves, we use the model to predict the optimal move instead
   
 ### Other Agents (Not Submitted)
 
@@ -55,6 +53,9 @@ credit: C++ data used from running this established expectimax implementation: h
    - Potential: Use similar to greedy agent or incorporate into an MCTS
    - file: `/sl_models/cnn_reward_model_regression.keras`
 
+2. **MCTS Enchanced by Classification Model**
+    - In simulation stage, instead of choosing a random move from the legal moves, we use the model to predict the optimal move instead
+
 ### Test Results
 
 **How to Run:** `pip3 install -r requirements.txt` to install packages (if packages are not on local machine)
@@ -62,6 +63,7 @@ credit: C++ data used from running this established expectimax implementation: h
 2. `python3 test_mcts.py` to see mcts agents' performances with varying time allowed
 3. `python3 any_agent_name.py` to see an individual agent play 1 game
 4. `python3 human_agent.py` to play the game yourself
+5. type make into the terminal to run the makefile with testing and usage instructions
 
 **Specifications:** 100 iterations of the game, time allowed for MCTS agents were 0.05s 
 
