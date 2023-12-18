@@ -1,12 +1,21 @@
-ESTIMATE of time to complete assignment: xx hours
+ESTIMATE of time to complete assignment: 17 hours
 
       Time     Time
 Date  Started  Spent Work completed
 ----  -------  ----  --------------
-xx/xx xx:xxpm  x:xx  description
+12/9 6:00pm    4:00   created my own implementation of 2048 to easily input various policies and record data
+12/10 9:00pm   3:00  worked on baseline implementations of human interaction agent, random agent, greedy agent 
+12/11 11:00am  4:00  implemented baseline MCTS agents using my MCTS from hw4. Made greedy MCTS agent that finds avg max score of tree branch
+12/13 6:00pm   3:00  played around with various hueristic strategies, tried MCTS that is greedy in terms of maximizing number of moves given tree branch
+                     turns out max moves did a lot better then Vinh and I would have presumed
+12/14 1:00pm   1:00  edited well known C++ expectimax implementaton to record training data "supervised_learning.txt" to attempt to classify state, action pairs
+12/14 1:00pm   2:00  attempted way too many variations of the CNN to try and get the NN to learn from the training data, generally unsuccesful due to overfitting,
+                     computational limits, lack of knowledge with neural nets etc. Chose one model to go with even though it wasnt ideal
                ----
-               x:xx TOTAL time spent
+              17:00 TOTAL time spent
 
 
 DISCUSSION
+Had a lot of fun doing this project, and generally speaking this class was very interesting. Thanks so much for an awesome semester!
+
 

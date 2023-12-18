@@ -4,6 +4,7 @@ from random_agent import random_policy
 from greedy_agent import greedy_policy
 from mcts import mcts_avg_policy
 from mcts_heuristics import mcts_heuristics_policy
+from nn_classification_agent import NN_policy
 
 """ MAIN testing script to compare performance of ALL agents
 
@@ -54,9 +55,7 @@ RESULTS: data collected from 100 iterations (all mcts agents had 0.05 seconds fo
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 | mcts w/ heuristics:                       | 14191.0 (34380)         | { 256: 8.0, 512: 22.0, 1024: 51.0, 2048: 19.0 }                 | 7399.27 |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
-| mcts w/ neural network (determines move): |
----------------------------------------------------------------------------------------------------------------------------------------------------
-| SL neural network model (classification): |
+| SL neural network model (classification): | 1534.32 (4732)          | {64: 24.0, 128: 56.0, 256: 14.0, 512: 2.0}                      | 819.8   |
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 * a more descriptive description/analysis will be provided on our READme file if interested
@@ -102,10 +101,10 @@ def display_policy(policy, name, iterations, count=False):
             score, max_tile = game.simulate_count_moves(policy, show_board=False, show_score=False)
        
         # printing each iteration
-        # if max_tile >= 2048:
-        #     print(f"{i}: {score} (tile={max_tile})**")
-        # else:
-        #     print(f"{i}: {score} (tile={max_tile})")
+        if max_tile >= 2048:
+            print(f"{i}: {score} (tile={max_tile})**")
+        else:
+            print(f"{i}: {score} (tile={max_tile})")
 
         average_score.append(score)
         tiles.append(max_tile)
@@ -129,6 +128,7 @@ if __name__ == "__main__":
     baseline_greedy_heuristics = greedy_policy(game, heuristics=True)
     policy_mcts = mcts_avg_policy(mcts_time)
     policy_mcts_enhanced = mcts_heuristics_policy(mcts_time, [0.0025, 0.003, 0.003, 0.004, 0, 1.0])
+    policy_SLNN = NN_policy
 
     # display policy results in terminal
     display_policy(baseline_random, "random", iterations)
@@ -136,3 +136,5 @@ if __name__ == "__main__":
     display_policy(baseline_greedy_heuristics, "greedy (heuristics)", iterations)
     display_policy(policy_mcts, "mcts standard", iterations)
     display_policy(policy_mcts_enhanced, "mcts heuristics", iterations, count=True)
+    display_policy(policy_SLNN, "supervised learning NN model", iterations)
+

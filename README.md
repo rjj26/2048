@@ -61,6 +61,7 @@ credit: C++ data used from running this established expectimax implementation: h
 1. `python3 test_main.py` to see all of our agents' performances (main test script)
 2. `python3 test_mcts.py` to see mcts agents' performances with varying time allowed
 3. `python3 any_agent_name.py` to see an individual agent play 1 game
+4. `python3 human_agent.py` to play the game yourself
 
 **Specifications:** 100 iterations of the game, time allowed for MCTS agents were 0.05s 
 
@@ -73,8 +74,7 @@ credit: C++ data used from running this established expectimax implementation: h
 | **greedy w/ heuristics** | 8938.76 (24928) | { 128: 2.0, 256: 14.0, 512: 56.0, 1024: 26.0, 2048: 2.0 } | 4291.32 |
 | **mcts (standard)** | 6689.96 (16474) | { 128: 2.0, 256: 24.0, 512: 55.0, 1024: 19.0 } | 3193.49 |
 | **mcts w/ heuristics** | 14191.0 (34380) | { 256: 8.0, 512: 22.0, 1024: 51.0, 2048: 19.0 } | 7399.27 |
-| **mcts w/ neural network** | | | |
-| **SL classification** | | | |
+| **SL classification** |1534.32 (4732)|{64: 24.0, 128: 56.0, 256: 14.0, 512: 2.0, 1024: 0.0, 2048: 0.0, 4096: 0.0} |819.8 |
 
 
 ### Folder Structure:
