@@ -19,9 +19,9 @@ from mcts_heuristics import mcts_heuristics_policy
     code description:
         - we programmed various agents to try to achieve the 2048 tile
         - our primary agents are 
-            (1) mcts (3 versions)
-            (2) supervised learning model (CNN) that uses state action pairs
-        - our results are stated below (on 100 iterations of the game):
+            (1) mcts (3 versions shown below)
+            (2) supervised learning model (CNN) with input state and output move/action
+        - our results are stated below (on 100 iterations of the game; mcts agents had 0.05s per move):
 
     how to run test scripts: 
         - to run main testing script (this one): 
