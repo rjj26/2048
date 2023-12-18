@@ -1,0 +1,3 @@
+all: 
+	cat greeting.txt
+	
